@@ -1,0 +1,74 @@
+<?php
+// Method 1: Using $ symbol (most common way)
+$name = "John";
+
+// Method 2: Using define() function for constants
+define("AGE", 25);
+
+// Method 3: Using const keyword for constants
+const CITY = "New York";
+
+echo "Name: " . $name . "<br>";
+echo "Age: " . AGE . "<br>";
+echo "City: " . CITY;
+
+
+
+$month = 4; // You can change this value to test different months
+echo "<br><br>Month: ";
+
+switch($month) {
+    case 1:
+        echo "January";
+        break;
+    case 2:
+        echo "February"; 
+        break;
+    case 3:
+        echo "March";
+        break;
+    case 4:
+        echo "April";
+        break;
+    case 5:
+        echo "May";
+        break;
+    case 6:
+        echo "June";
+        break;
+    case 7:
+        echo "July";
+        break;
+    case 8:
+        echo "August";
+        break;
+    case 9:
+        echo "September";
+        break;
+    case 10:
+        echo "October";
+        break;
+    case 11:
+        echo "November";
+        break;
+    case 12:
+        echo "December";
+        break;
+    default:
+        echo "Invalid month number";
+}
+
+
+
+
+// Array of 10 Pakistani cities
+$pakistanCities = array("Karachi", "Lahore", "Islamabad", "Peshawar", "Quetta", "Multan", "Faisalabad", "Rawalpindi", "Hyderabad", "Sialkot");
+
+echo "<br><br>Major Cities of Pakistan:<br>";
+foreach($pakistanCities as $city) {
+    echo $city . "<br>";
+}
+
+
+
+?>
