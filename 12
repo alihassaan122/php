@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple User CRUD Operations</title>
+</head>
+<body>
+    <h1>User Management</h1>
+    <form method="POST">
+        <!-- Shared Input Fields -->
+        <label for="name">Name (if applicable):</label>
+        <input type="text" id="name" name="name">
+        <br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br><br>
+
+        <!-- Buttons for Different Operations -->
+        <button type="submit" name="submit">Add User</button>
+        <button type="submit" name="update">Update User</button>
+        <button type="submit" name="delete">Delete User</button>
+        <button type="submit" name="search">Search User</button>
+    </form>
+
+    <?php
+    // Database connection
+    $conn = new mysqli("localhost", "root", "", "try2");
+
+    // Create table
+    $table_sql = "CREATE TABLE IF NOT EXISTS users123 (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(50) NOT NULL,
+        email VARCHAR(50) NOT NULL UNIQUE
+    )";
+    $conn->query($table_sql);
+
+    // Add user
+    if (isset($_POST['submit'])) {
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $insert_sql = "INSERT INTO users123 (name, email) VALUES ('$name', '$email')";
+        $conn->query($insert_sql);
+     
+    }
+
+    // Update user
+    if (isset($_POST['update'])) {
+        $email = $_POST['email'];
+        $name = $_POST['name'];
+        $update_sql = "UPDATE users123 SET name='$name' WHERE email='$email'";
+        $conn->query($update_sql);
+    }
+
+    // Delete user
+    if (isset($_POST['delete'])) {
+        $email = $_POST['email'];
+        $delete_sql = "DELETE FROM users123 WHERE email='$email'";
+        $conn->query($delete_sql);
+    }
+
+    // Search user
+    if (isset($_POST['search'])) {
+        $email = $_POST['email'];
+        $search_sql = "SELECT * FROM users123 WHERE email='$email'";
+        $result = $conn->query($search_sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<h2>User Details:</h2>";
+                echo "Name: " . $row['name'] . "<br>Email: " . $row['email'] . "<br>";
+            }
+        } else {
+            echo "No user found with this email.<br>";
+        }
+    }
+
+    $conn->close();
+    ?>
+</body>
+</html>
