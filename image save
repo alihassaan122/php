@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ <h1>this is img insertion form</h1>
+ <form action="" method="POST" enctype="multipart/form-data">
+  <label for="pro_name">Product Name</label>
+  <input type="text" name="pro_Name" id=""> <br><br>
+
+  <label for="pro_image">Product Image</label>
+  <input type="file" name="pro_image" id=""> <br><br>
+
+  <input type="submit" value="Submit" name="addpro">
+ </form>   
+<?php 
+  if(isset($_POST['addpro'])){
+$proName=$_POST['pro_Name'];
+$conn=mysqli_connect("localhost","root","","image1");
+if(!$conn){
+    echo "error in connection";
+}
+   if(isset($_FILES['pro_image'])){
+    $filename=$_FILES['pro_image']['name'];
+    $temp_name=$_FILES['pro_image']['tmp_name'];
+    if(move_uploaded_file( $temp_name,"images/".$filename)){
+     $sql="INSERT into product(prod_name,prod_image)values ('$proName','$filename')";
+     if(mysqli_query($conn,$sql)){
+        echo"product added successfully";
+
+     }
+     else{
+        echo"error in adding product";
+     }
+    }
+    else{echo "file uploading fail";}
+   }
+   else{echo "please select valid image";}
+
+   mysqli_close($conn);
+   header("location:display.php");
+   exit;
+  }
+?>
+</body>
+</html>
